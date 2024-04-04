@@ -1,0 +1,22 @@
+*.pyc
+venv/
+.idea
+dev-preview.log
+prod-preview.log
+*.code-workspace
+.vscode
+.terraform
+terraform/state
+.DS_Store
+.env
+.envrc
+*.csv
+
+# Pants workspace files
+/.pants.*
+/dist/
+/.pids
+.pytest_cache
+local.settings.json
+terraform/dist
+.docker/components/secrets/local.json

@@ -1,0 +1,32 @@
+[GLOBAL]
+pants_version = "2.19.1"
+
+backend_packages = [
+  "pants.backend.python",
+  "pants.backend.docker",
+]
+
+[anonymous-telemetry]
+enabled = false
+
+[python]
+tailor_pex_binary_targets = false
+enable_resolves = true
+interpreter_constraints = ["CPython==3.11.8"]
+
+[python-infer]
+use_rust_parser = true
+
+
+[source]
+root_patterns = [
+  "src/python",
+  "test/python",
+]
+
+[docker]
+env_vars = ["DOCKER_CONFIG", "DOCKER_DEFAULT_PLATFORM"]
+tools = []
+
+[generate-lockfiles]
+diff = true

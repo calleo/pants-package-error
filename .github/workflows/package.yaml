@@ -1,0 +1,58 @@
+name: "Python CI"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+
+jobs:
+  test_and_package:
+    name: Test & Package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Use Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.8'
+
+      - name: Bootstrap Pants
+        run: |-
+          curl --proto '=https' --tlsv1.2 -fsSL https://static.pantsbuild.org/setup/get-pants.sh | bash
+
+      - name: Pants Check
+        run: |
+          pants tailor --check ::
+          pants update-build-files --check ::
+
+      - name: Test
+        run: |-
+          pants test ::
+
+      - name: Package
+        run: |
+          pants package ::
+
+  package_only:
+    name: Package Only
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Use Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.8'
+
+      - name: Bootstrap Pants
+        run: |-
+          curl --proto '=https' --tlsv1.2 -fsSL https://static.pantsbuild.org/setup/get-pants.sh | bash
+
+      - name: Package
+        run: |
+          pants package ::
