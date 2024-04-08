@@ -24,14 +24,9 @@ jobs:
         run: |-
           curl --proto '=https' --tlsv1.2 -fsSL https://static.pantsbuild.org/setup/get-pants.sh | bash
 
-      - name: Pants Check
-        run: |
-          pants tailor --check ::
-          pants update-build-files --check ::
-
-      - name: Test
+      - name: Seed cache first
         run: |-
-          pants test ::
+          pants --no-local-cache package :__workaround_pex_issue_2395
 
       - name: Package
         run: |
